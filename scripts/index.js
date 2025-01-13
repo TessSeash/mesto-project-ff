@@ -11,26 +11,26 @@
 const cardsTemplate = document.querySelector("#card-template").content; // Темплейт карточки
 const cardsContainer = document.querySelector(".places__list"); // контейнер, где появляются карточки
 
-function createCards(cardsArray) {
-  cardsArray.forEach(function (elem) {
-    const clonedCard = cardsTemplate.cloneNode(true); // клонирую темплейт в CloneCard
+function createCard(cardName, cardLink, deleteButtonEvent) {
+  const cardElement = cardsTemplate.cloneNode(true);
+  const cardImage = cardElement.querySelector('.card__image');
+  const cardTitle = cardElement.querySelector('.card__title')
+  const deleteButton = cardElement.querySelector(".card__delete-button");
 
-    const cardImage = clonedCard.querySelector(".card__image"); // переменная для редактирования картинки
-    const cardTitle = clonedCard.querySelector(".card__title"); // переменная для редактирования описания под картинкой
-    const deleteButton = clonedCard.querySelector(".card__delete-button"); // переменная для кнопки удаления
+  cardImage.src = cardLink;
+  cardImage.alt = cardName;
+  cardTitle.textContent = cardName;
 
-    cardImage.src = elem.link; // меняю параметры у клона темплейта
-    cardImage.alt = elem.name;
-    cardTitle.textContent = elem.name;
+  deleteButton.addEventListener('click', deleteButtonEvent);
 
-    function deleteCard() {
-      const removeCard = deleteButton.closest(".card");
-      removeCard.remove();
-    } // функция удаления карты
-
-    deleteButton.addEventListener("click", deleteCard); // добавление слушателя событий к кнопке
-    cardsContainer.append(clonedCard); // добавляю клон темплейта в конец контейнера
-  });
+  return cardElement;
 }
 
-createCards(initialCards);
+function deleteCard (event) { 
+  event.target.closest(".card").remove(); 
+};
+
+initialCards.forEach(function(cardData) {
+  const card = createCard(cardData.name, cardData.link, deleteCard);
+  cardsContainer.append(card);
+});
