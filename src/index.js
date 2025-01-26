@@ -55,7 +55,7 @@ function addNewCard(evt) {
   const newCardNameInput = newCardName.value;
   const newCardLinkInput = newCardLink.value;
 
-  const newCard = createCard(newCardNameInput, newCardLinkInput, deleteCard, activateLike);
+  const newCard = createCard(newCardNameInput, newCardLinkInput, deleteCard, activateLike, popupImage);
   cardsContainer.prepend(newCard);
 
   closeModal(popupAddCard);
