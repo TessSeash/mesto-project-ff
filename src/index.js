@@ -14,6 +14,7 @@ const buttonEditProfile = document.querySelector(".profile__edit-button");// Ñ€Ð
 const buttonClosePopupEditProfile = document.querySelector(".popup_type_edit .popup__close");
 const popupEditProfile = document.querySelector('.popup_type_edit');
 
+
 const buttonClosePopupShowImage = document.querySelector('.popup_type_image .popup__close');
 const popupShowImage = document.querySelector('.popup_type_image');
 
