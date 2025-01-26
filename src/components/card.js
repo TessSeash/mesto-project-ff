@@ -1,6 +1,4 @@
-import { openModal } from "./modal";
-
-function createCard(cardName, cardLink, deleteButtonEvent, likeButtonEvent) {
+function createCard(cardName, cardLink, deleteButtonEvent, likeButtonEvent, imagePopupEvent) {
   const cardsTemplate = document.querySelector("#card-template").content; // Темплейт карточки
   const cardElement = cardsTemplate.cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
@@ -14,25 +12,10 @@ function createCard(cardName, cardLink, deleteButtonEvent, likeButtonEvent) {
 
   deleteButton.addEventListener("click", deleteButtonEvent);
   likeButton.addEventListener("click", likeButtonEvent);
+  cardImage.addEventListener('click', imagePopupEvent);
 
   return cardElement;
 }
-
-function popupImage(event) {
-  const card = event.target.closest('.card__image');
-  if (card) {
-    const cardName = card.alt;
-    const cardLink = card.src
-    const popup = document.querySelector('.popup_type_image');
-    const popupName = popup.querySelector('.popup__caption');
-    const popupLink = popup.querySelector('.popup__image');
-    popupName.textContent = cardName;
-    popupLink.src = cardLink;
-    popupLink.alt = cardName;
-
-    openModal(popup);
-  }
-};
 
 function deleteCard(event) {
   event.stopPropagation();
@@ -43,4 +26,4 @@ function activateLike(event) {
   event.target.classList.toggle('card__like-button_is-active');
 };
 
-export { createCard, deleteCard, activateLike, popupImage }
+export { createCard, deleteCard, activateLike}
