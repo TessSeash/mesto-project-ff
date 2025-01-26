@@ -18,6 +18,22 @@ function createCard(cardName, cardLink, deleteButtonEvent, likeButtonEvent) {
     return cardElement;
 }
 
+function popupImage (event) {
+    const card = event.target.closest('.card');
+    const cardName = card.querySelector(".card__image").alt;
+    const cardLink = card.querySelector(".card__image").src
+    const popup = document.querySelector('.popup_type_image');
+    const popupName = popup.querySelector('.popup__caption');
+    const popupLink = popup.querySelector('.popup__image');
+    if (card) {
+      popupName.textContent = cardName;
+      popupLink.src = cardLink;
+      popupLink.alt = cardName;
+  
+      openModal(popup);
+    }
+  };
+
 function deleteCard(event) {
     event.target.closest(".card").remove();
 }
@@ -26,4 +42,4 @@ function activateLike(event) {
     event.target.classList.toggle('card__like-button_is-active');
 };
 
-export { createCard, deleteCard, activateLike }
+export { createCard, deleteCard, activateLike, popupImage}

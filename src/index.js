@@ -1,6 +1,6 @@
 import './pages/index.css'; // добавьте импорт главного файла стилей
 import { initialCards } from './scripts/cards';
-import { createCard, deleteCard, activateLike } from './components/card';
+import { createCard, deleteCard, activateLike, popupImage } from './components/card';
 import { openModal, closeModal } from './components/modal';
 
 
@@ -99,18 +99,4 @@ buttonClosePopupShowImage.addEventListener("click", function () {
   closeModal(popupShowImage);
 });
 
-cardsContainer.addEventListener("click", function (event) {
-  const card = event.target.closest('.card');
-  const cardName = card.querySelector(".card__image").alt;
-  const cardLink = card.querySelector(".card__image").src
-  const popup = document.querySelector('.popup_type_image');
-  const popupName = popup.querySelector('.popup__caption');
-  const popupLink = popup.querySelector('.popup__image');
-  if (card) {
-    popupName.textContent = cardName;
-    popupLink.src = cardLink;
-    popupLink.alt = cardName;
-
-    openModal(popup);
-  }
-});
+cardsContainer.addEventListener("click", popupImage);
