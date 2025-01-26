@@ -1,6 +1,6 @@
 import './pages/index.css'; // добавьте импорт главного файла стилей
 import { initialCards } from './scripts/cards';
-import { createCard, deleteCard, activateLike, showCardImage } from './components/card';
+import { createCard, deleteCard, activateLike } from './components/card';
 import { openModal, closeModal } from './components/modal';
 
 
@@ -29,15 +29,14 @@ const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
 
 initialCards.forEach(function (cardData) {
-  const card = createCard(cardData.name, cardData.link, deleteCard, activateLike, showCardImage);
+  const card = createCard(cardData.name, cardData.link, deleteCard, activateLike);
   cardsContainer.append(card);
 });
 
 
 //попап для создания новой карточки
 function restoreAddCardInputs() { // восстановить прежние значения в инпутах popupAddCard
-  newCardName.value = '';
-  newCardLink.value = '';
+  formAddCard.reset();
 }
 
 buttonAddCard.addEventListener("click", function () {
@@ -47,7 +46,6 @@ buttonAddCard.addEventListener("click", function () {
 
 buttonClosePopupAddCard.addEventListener("click", function () {
   closeModal(popupAddCard);
-  restoreAddCardInputs();
 });
 
 function addNewCard(evt) {
@@ -56,7 +54,7 @@ function addNewCard(evt) {
   const newCardNameInput = newCardName.value;
   const newCardLinkInput = newCardLink.value;
 
-  const newCard = createCard(newCardNameInput, newCardLinkInput, deleteCard, activateLike, showCardImage);
+  const newCard = createCard(newCardNameInput, newCardLinkInput, deleteCard, activateLike);
   cardsContainer.prepend(newCard);
 
   closeModal(popupAddCard);
@@ -78,7 +76,6 @@ buttonEditProfile.addEventListener("click", function () {
 
 buttonClosePopupEditProfile.addEventListener("click", function () {
   closeModal(popupEditProfile);
-  restoreProfileInputs();
 });
 
 function setProfileProperties(evt) {
@@ -97,10 +94,7 @@ formEditProfile.addEventListener('submit', setProfileProperties);
 
 
 // попап для открытия карточки на весь экран
+
 buttonClosePopupShowImage.addEventListener("click", function () {
-  popupShowImage.classList.remove('popup_is-opened');
-})
-
-
-
-
+  closeModal(popupShowImage);
+}); 

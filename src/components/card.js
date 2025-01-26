@@ -1,4 +1,6 @@
-function createCard(cardName, cardLink, deleteButtonEvent, likeButtonEvent, showCardImageEvent) {
+import { openModal } from "./modal";
+
+function createCard(cardName, cardLink, deleteButtonEvent, likeButtonEvent) {
     const cardsTemplate = document.querySelector("#card-template").content; // Темплейт карточки
     const cardElement = cardsTemplate.cloneNode(true);
     const cardImage = cardElement.querySelector(".card__image");
@@ -12,7 +14,7 @@ function createCard(cardName, cardLink, deleteButtonEvent, likeButtonEvent, show
 
     deleteButton.addEventListener("click", deleteButtonEvent);
     likeButton.addEventListener("click", likeButtonEvent);
-    cardImage.addEventListener("click", showCardImageEvent);
+    cardImage.addEventListener("click", showCardImage);
 
     return cardElement;
 }
@@ -30,26 +32,11 @@ function showCardImage(event) {
     const popupImage = popup.querySelector('.popup__image');
     const popupCaption = popup.querySelector('.popup__caption');
 
-    popup.classList.add('popup_is-opened'); // открытие попапа и изменение атрибутов
     popupImage.setAttribute('alt', event.target.alt);
     popupImage.setAttribute('src', event.target.src);
     popupCaption.textContent = event.target.alt;
-
-    function closeByOverlay(event) { // закрытие попапа на оверлей
-        if (event.target === popup) {
-            popup.classList.remove('popup_is-opened');
-        }
-    };
-
-    function closeByEsc(event) { // закрытие попапа на Esc
-        if (event.key === 'Escape') {
-            popup.classList.remove('popup_is-opened');
-        }
-    }
-
-    popup.addEventListener("click", closeByOverlay);
-    document.addEventListener("keydown", closeByEsc);
-
+    openModal(popup);
 }
 
-export { createCard, deleteCard, activateLike, showCardImage }
+
+export { createCard, deleteCard, activateLike }
