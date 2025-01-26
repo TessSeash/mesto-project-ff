@@ -30,7 +30,7 @@ const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
 
 initialCards.forEach(function (cardData) {
-  const card = createCard(cardData.name, cardData.link, deleteCard, activateLike, popupImage);
+  const card = createCard(cardData.name, cardData.link, deleteCard, activateLike, openPopupImage);
   cardsContainer.append(card);
 });
 
@@ -55,7 +55,7 @@ function addNewCard(evt) {
   const newCardNameInput = newCardName.value;
   const newCardLinkInput = newCardLink.value;
 
-  const newCard = createCard(newCardNameInput, newCardLinkInput, deleteCard, activateLike, popupImage);
+  const newCard = createCard(newCardNameInput, newCardLinkInput, deleteCard, activateLike, openPopupImage);
   cardsContainer.prepend(newCard);
 
   closeModal(popupAddCard);
@@ -95,9 +95,8 @@ formEditProfile.addEventListener('submit', setProfileProperties);
 
 
 // попап для открытия карточки на весь экран
-function popupImage(event) {
-  const card = event.target.closest('.card__image');
-  if (card) {
+function openPopupImage(event) {
+  const card = event.target;
     const cardName = card.alt;
     const cardLink = card.src
     const popup = document.querySelector('.popup_type_image');
@@ -108,7 +107,6 @@ function popupImage(event) {
     popupLink.alt = cardName;
 
     openModal(popup);
-  }
 };
 
 buttonClosePopupShowImage.addEventListener("click", function () {
