@@ -14,7 +14,6 @@ function createCard(cardName, cardLink, deleteButtonEvent, likeButtonEvent) {
 
     deleteButton.addEventListener("click", deleteButtonEvent);
     likeButton.addEventListener("click", likeButtonEvent);
-    cardImage.addEventListener("click", showCardImage);
 
     return cardElement;
 }
@@ -26,17 +25,5 @@ function deleteCard(event) {
 function activateLike(event) {
     event.target.classList.toggle('card__like-button_is-active');
 };
-
-function showCardImage(event) {
-    const popup = document.querySelector('.popup_type_image');
-    const popupImage = popup.querySelector('.popup__image');
-    const popupCaption = popup.querySelector('.popup__caption');
-
-    popupImage.setAttribute('alt', event.target.alt);
-    popupImage.setAttribute('src', event.target.src);
-    popupCaption.textContent = event.target.alt;
-    openModal(popup);
-}
-
 
 export { createCard, deleteCard, activateLike }
