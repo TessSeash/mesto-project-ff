@@ -60,8 +60,8 @@ Promise.all([getUserDataApi(), getInitialsCardsApi()])
 
       const names = cardData.likes.map(likes => likes.name);
       const userLiked = names.includes(userData.name);
-
-      const card = createCard(cardData.name, cardData.link, deleteCard, openPopupImage, cardData.likes.length, cardData._id, currentUserId, cardData.owner._id, userLiked);
+      
+      const card = createCard(cardData, deleteCard, openPopupImage, currentUserId, userLiked);
       cardsContainer.append(card);
 
     });
@@ -99,7 +99,7 @@ function addNewCard(evt) {
 
   addNewCardApi(newCardNameInput, newCardLinkInput)
     .then(card => {
-      const newCard = createCard(newCardNameInput, newCardLinkInput, deleteCard, openPopupImage, card.likes.length, card._id, currentUserId, card.owner._id);
+      const newCard = createCard(card, deleteCard, openPopupImage, currentUserId);
       cardsContainer.prepend(newCard);
       closeModal(popupAddCard)
     })
@@ -157,14 +157,13 @@ function openPopupImage(event) {
   const card = event.target;
   const cardName = card.alt;
   const cardLink = card.src
-  const popup = document.querySelector('.popup_type_image');
-  const popupName = popup.querySelector('.popup__caption');
-  const popupLink = popup.querySelector('.popup__image');
+  const popupName = popupShowImage.querySelector('.popup__caption');
+  const popupLink = popupShowImage.querySelector('.popup__image');
   popupName.textContent = cardName;
   popupLink.src = cardLink;
   popupLink.alt = cardName;
 
-  openModal(popup);
+  openModal(popupShowImage);
 };
 
 buttonClosePopupShowImage.addEventListener("click", function () {
@@ -182,8 +181,6 @@ function editAvatar(evt) {
 
   evt.preventDefault()
   renderLoading(true, formEditAvatar)
-
-  console.log(avatarUrlInput.value);
 
   updateAvatarApi(avatarUrlInput.value)
     .then(avatar => {

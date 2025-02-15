@@ -1,6 +1,6 @@
 import { deleteOwnerCard, setLikeApi } from './api'
 
-function createCard(cardName, cardLink, deleteButtonEvent, imagePopupEvent, likes, cardId, currentUserId, ownerId, userLiked) {
+function createCard(cardData, deleteButtonEvent, imagePopupEvent, currentUserId, userLiked) {
   const cardsTemplate = document.querySelector("#card-template").content; // Темплейт карточки
   const cardElement = cardsTemplate.cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
@@ -9,15 +9,15 @@ function createCard(cardName, cardLink, deleteButtonEvent, imagePopupEvent, like
   const likeButton = cardElement.querySelector(".card__like-button");
   const likeCount = cardElement.querySelector(".card__like-count");
 
-  cardImage.src = cardLink;
-  cardImage.alt = cardName;
-  cardTitle.textContent = cardName;
-  likeCount.textContent = likes;
+  cardImage.src = cardData.link;
+  cardImage.alt = cardData.name;
+  cardTitle.textContent = cardData.name;
+  likeCount.textContent = cardData.likes.length;
 
   deleteButton.style.visibility = "hidden"; // Скрываем кнопку удаления карточки
-  if (currentUserId === ownerId) { // Показываем кнопку удаления карточки если пользователь - автор картинки
+  if (currentUserId === cardData.owner._id) { // Показываем кнопку удаления карточки если пользователь - автор картинки
     deleteButton.style.visibility = "visible";
-    deleteButton.addEventListener("click", (event) => deleteButtonEvent(event, cardId));
+    deleteButton.addEventListener("click", (event) => deleteButtonEvent(event, cardData._id));
   }
 
   if (userLiked) {
@@ -25,7 +25,7 @@ function createCard(cardName, cardLink, deleteButtonEvent, imagePopupEvent, like
   }
 
   likeButton.addEventListener('click', () => {
-    setLikeToCard(likeButton, cardId, likeCount);
+    setLikeToCard(likeButton, cardData._id, likeCount);
   })
 
 
@@ -36,9 +36,11 @@ function createCard(cardName, cardLink, deleteButtonEvent, imagePopupEvent, like
 
 function deleteCard(event, cardId) {
   event.stopPropagation();
-  event.target.closest(".card").remove(); // удаляем карточку у себя
 
   deleteOwnerCard(cardId) // Удаляем карточку с сервера
+    .then(() => {
+    event.target.closest(".card").remove(); // удаляем карточку у себя
+    })
     .catch(err => {
       console.log(`Ошибка при удалении карточки: ${err}`);
     });
