@@ -32,6 +32,8 @@ const profileDescription = document.querySelector('.profile__description');
 
 const buttonClosePopupShowImage = document.querySelector('.popup_type_image .popup__close'); // попап картинки на весь экран
 const popupShowImage = document.querySelector('.popup_type_image');
+const popupName = popupShowImage.querySelector('.popup__caption');
+const popupLink = popupShowImage.querySelector('.popup__image');
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -157,8 +159,6 @@ function openPopupImage(event) {
   const card = event.target;
   const cardName = card.alt;
   const cardLink = card.src
-  const popupName = popupShowImage.querySelector('.popup__caption');
-  const popupLink = popupShowImage.querySelector('.popup__image');
   popupName.textContent = cardName;
   popupLink.src = cardLink;
   popupLink.alt = cardName;
